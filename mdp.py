@@ -56,8 +56,20 @@ class MDP:
 # initialized before interactive_fn is called the first time.
 
 def value_iteration(mdp, q, eps=0.01, interactive_fn=None, max_iters=10000):
-    # Your code here
-    pass
+    def v(s):
+        return value(q, s)
+    for it in range(max_iters):
+        new_q = q.copy()
+        delta = 0
+        for s in mdp.states:
+            for a in mdp.actions:
+                new_q.set(s, a, mdp.reward_fn(s, a) + mdp.discount_factor * mdp.transition_model(s, a).expectation(v))
+                delta = max(delta, abs(new_q.get(s, a) - q.get(s, a)))
+        if delta < eps:
+            return new_q
+        q = new_q
+    return q
+
 
 
 # Compute the q value of action a in state s with horizon h, using expectimax

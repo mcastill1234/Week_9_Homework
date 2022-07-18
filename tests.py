@@ -173,5 +173,5 @@ def test_q_em():
 # test_value()
 # test_greedy()
 # test_epsilon_greedy()
-# test_value_iteration()
+test_value_iteration()
 # test_q_em()
